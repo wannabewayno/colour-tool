@@ -19,7 +19,7 @@ module.exports = (H,W,B) => {
     
     return [
         H,
-        Math.decimal( S * 100, 1),
-        Math.decimal( V * 100, 1)
+        Math.decimal( S * 100, 0),
+        Math.decimal( V * 100, 0)
     ];
 }

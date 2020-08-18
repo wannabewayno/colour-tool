@@ -9,7 +9,7 @@ describe("HWB2HSV()", () => {
         it(`should convert ${colour.hwb} to ${colour.hsv}` , () => {
             const convertFrom = new Colour(colour.hwb).getChannels();
             const convertTo = new Colour(colour.hsv).getChannels();
-            expect(HWB2HSV(...convertFrom)).toStrictEqual(convertTo);
+            expect(HWB2HSV(...convertFrom)).toStrictEqual(convertTo.map(value => Math.floor(value)));
         });
     });
 });
