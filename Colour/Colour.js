@@ -1,15 +1,25 @@
-import HSL2RGB from './HSL2RGB';
-import RGB2HSL from './RGB2HSL';
-import RGB2HEX from './RGB2HEX';
-import HEX2RGB from './HEX2RGB';
+const HSL2RGB = require('./convert/HSL2RGB');
+const RGB2HSL = require('./convert/RGB2HSL');
+const RGB2HEX = require('./convert/RGB2HEX');
+const HEX2RGB = require('./convert/HEX2RGB');
+const CMYK2RGB = require('./convert/CMYK2RGB');
+const RGB2CMYK = require('./convert/RGB2CMYK');
+const destructureColour = require('./destructureColour');
+const { bigIntLiteral } = require('@babel/types');
 
 
-export default class Colour {
-    constructor(type, channels){
+module.exports = class Colour {
+    constructor(colourString){
+
+        const { type, channels } = destructureColour(colourString);
+
+        if (channels.length < 4 && type !== 'cmyk' || type === 'cmyk' && channels.length < 5 ) this.alpha = 1;
+        else this.alpha = channels.pop();
+
         this.type = type;
         this.channels = channels;
-        this.alpha = channels[3]? channels[3]:1
     }
+    
 // ==============================================================================
     //only get, can't set without converting
     getType() { return this.type };
@@ -46,51 +56,131 @@ export default class Colour {
      * Set the opacity from transparent (0) to opaque (100);
      * @param {Number} opacity - a number from 0 - 100 
      */
-    setOpacity(opacity) { 
-        this.alpha = opacity/100
+    setOpacity(opacity) {
+        if(opacity <= 0) {
+            this.alpha = 0;
+            return this;
+        } 
+        if(opacity >= 100) {
+            this.alpha = 1;
+            return this;
+        }
+        this.alpha = opacity/100;
         return this
     }
 
 // ==========================================================================
     darken(percentage){
+        // if negative, lighten it
+        if(percentage < 0) return this.lighten(Math.abs(percentage));
+
+        // otherwise convert to hsl if not already in hsl
+        const typeBefore = this.type; // note the type so we can convert back to it
         if(this.type !== 'hsl') this.convert('hsl');
+
+        // get lightness value
         let [H,S,L] = this.getChannels();
+
+        // darken by the required percentage
         L -= percentage;
+
+        // if under 0, clip it at 0
         if(L < 0 ) L = 0;
+
+        // set the new lightness
         this.setChannels({ L });
+
+        // convert back to original type if not hsl
+        if(typeBefore !== 'hsl') this.convert(typeBefore);
+
+        // return the colour instance for method chaining
         return this
     }
 
     lighten(percentage){
+        // if negative, lighten it
+        if(percentage < 0) return this.darken(Math.abs(percentage));
+
+        // otherwise convert to hsl if not already in hsl
+        const typeBefore = this.type; // note the type so we can convert back to it
         if(this.type !== 'hsl') this.convert('hsl');
+
+        // get the lightness value
         let [H,S,L] = this.getChannels();
+
+        // lighten by the required percentage
         L += percentage;
+
+        // if it goes over 100, clip it at 100
         if(L > 100) L = 100;
+
+        // set the new lightness
         this.setChannels({ L });
+
+        // convert back to original type if not hsl
+        if(typeBefore !== 'hsl') this.convert(typeBefore);
+
+        // return the colour instance for method chanining
         return this
     }
 // ==========================================================================
     saturate(percentage){
+        // if negative, desaturate
+        if(percentage < 0) return this.desaturate(Math.abs(percentage));
+
+        // otherwise convert to hsl if not already in hsl
+        const typeBefore = this.type; // note the type so we can convert back to it
         if(this.type !== 'hsl') this.convert('hsl');
+
+        // then get saturation
         let [H,S,L] = this.getChannels();
+
+        // add on the desired percentage
         S += percentage;
+
+        // if over 100, clip it
         if(S > 100 ) S = 100;
+
+        // set saturation
         this.setChannels({ S });
+
+        // convert back to original type if not hsl
+        if(typeBefore !== 'hsl') this.convert(typeBefore);
+
+        // return the colour instance for method chaining
         return this
     }
 
     desaturate(percentage){
+        // if negative, saturate
+        if(percentage < 0) return this.saturate(Math.abs(percentage));
+
+        // otherwise convert to hsl if not already in hsl
+        const typeBefore = this.type; // note the type so we can convert back to it
         if(this.type !== 'hsl') this.convert('hsl');
+
+        // get saturation
         let [H,S,L] = this.getChannels();
+
+        // take away the desired percentage
         S -= percentage;
+
+        // if under 0, clip it
         if(S < 0) S = 0;
+
+        // set it
         this.setChannels({ S });
+
+        // convert back to original type if not hsl
+        if(typeBefore !== 'hsl') this.convert(typeBefore);
+
+        // return the colour instance for method chaining
         return this
     }
 // ==============================================================================
     getContrast(){
-        const initialColour = this.type;
-        this.convert('rgb');
+        const initialType = this.type;
+        if(this.type !== 'rgb') this.convert('rgb');
 
         const [ R , G , B ] = this.channels;
 
@@ -98,14 +188,19 @@ export default class Colour {
         const yiq = ((R * 299) + (G * 587) + (B * 114)) / 1000;
 
         //convert back to initialColour
-        this.convert(initialColour);
+        if(initialType !== 'rgb') this.convert(initialType);
 
         // Check contrast
         let black;
         let white;
-        if(this.type === 'rgb') black = 'rgba(0,0,0,1)';   white ='rgba(255,255,255,1)';
-        if(this.type === 'hsl') black = 'hsla(0,0%,0%,1)'; white ='hsla(0,0%,100%,1)';
-        if(this.type === 'hex') black = '#000000';         white ='#FFFFFF';
+        switch(this.type){
+            case'rgb' : black = 'rgba(0,0,0,1)';   white ='rgba(255,255,255,1)';    break;
+            case'hsl' : black = 'hsla(0,0%,0%,1)'; white ='hsla(0,0%,100%,1)';      break;
+            case'hex' : black = '#000000';         white ='#FFFFFF';                break;
+            case'cmyk': black = 'cmyk(0,0,0,100)'; white ='cmyk(0,0,0,0)';          break;
+            default: console.warn('unrecognised type!, cannot match appropriate colour')
+        }
+       
 
         return (yiq >= 128) ? black : white;
 
@@ -139,31 +234,41 @@ export default class Colour {
 
         // if same colour type, do nothing 🤷
         if(this.type === convertTo){
-            return 
+            return this
         }
 
         switch(convertTo){
             case'rgb':
-                if(this.type === 'hex') this.channels = HEX2RGB(...this.channels);
-                if(this.type === 'hsl') this.channels = HSL2RGB(...this.channels);
-                this.type = 'rgb'
-                return this
+                if(this.type === 'hex')  this.channels = HEX2RGB(...this.channels);
+                if(this.type === 'hsl')  this.channels = HSL2RGB(...this.channels);
+                if(this.type === 'cmyk') this.channels = CMYK2RGB(...this.channels);
+                this.type = 'rgb';
+                return this;
             case'hsl':
-                if(this.type === 'hex') this.convert('rgb');
+                if(this.type !== 'rgb') this.convert('rgb');
+                // now with rgb channels
                 this.channels = RGB2HSL(...this.channels);
-                this.type = 'hsl'
-                return this
+                this.type = 'hsl';
+                return this;
             case'hex':
-                if(this.type === 'hsl') this.convert('rgb');
-                this.channels = RGB2HEX(...this.channels)
-                this.type = 'hex'
-                return this
+                if(this.type !== 'rgb') this.convert('rgb');
+                // now with rgb channels
+                this.channels = RGB2HEX(...this.channels);
+                this.type = 'hex';
+                return this;
+            case 'cmyk':
+                if(this.type !== 'rgb') this.convert('rgb');
+                // now with rgb channels
+                this.channels = RGB2CMYK(...this.channels);
+                this.type = 'cmyk';
+                return this;
+
             default:
                 console.warn("convert doesn't recognise this as a colour to convert to")
         }
     }
 
     clone(){
-        return new Colour(this.type,this.channels);
+        return new Colour(this.CSS());
     }
 }

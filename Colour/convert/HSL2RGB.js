@@ -4,11 +4,12 @@ const extendMath = require('../mathExtension');
 extendMath();
 
 module.exports = (H,S,L) => {
-    S /= 100;
-    L /= 100;
 
-    const C = (1 - Math.abs(2*L-1))*S;
-    const X = C * (1-Math.abs( ( (H/60) % 2 ) - 1 ));
+    S /= 100
+    L /= 100
+
+    const C = (1 - Math.abs(2 * L - 1)) * S;
+    const X = C * (1 - Math.abs( ( (H / 60) % 2 ) - 1 ));
     const m = L - ( C / 2 );
     
     let RGB;
@@ -32,7 +33,7 @@ module.exports = (H,S,L) => {
         RGB = [C,0,X]
     }
 
-    RGB = RGB.map(value => value = Math.round((value + m)*255));
+    RGB = RGB.map(value => Math.round((value + m) * 255));
 
     return RGB;
 }

@@ -1,0 +1,36 @@
+{
+  "name": "colour-tool",
+  "version": "0.0.1",
+  "description": "dev-tool that makes colours easier to deal with",
+  "main": "./dist/index.js",
+  "dependencies": {
+    "jest": "^26.4.0",
+    "webpack": "^4.44.1",
+    "webpack-cli": "^3.3.12"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/wannabewayno/colour-tool.git"
+  },
+  "keywords": [
+    "colour",
+    "color",
+    "dev-tool",
+    "tool",
+    "color-tool",
+    "colour-tool",
+    "css",
+    "css-colour",
+    "css-color"
+  ],
+  "author": "wayne",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/wannabewayno/colour-tool/issues"
+  },
+  "homepage": "https://github.com/wannabewayno/colour-tool#readme"
+}
