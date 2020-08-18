@@ -6,11 +6,10 @@ describe("HSV2HWB()", () => {
 
     // Positive test
     colours.forEach(colour => {
-        it(`should convert ${colour.hwb} to ${colour.hwb}` , () => {
-            const convertFrom = new Colour(colour.hwb).getChannels();
+        it(`should convert ${colour.hsv} to ${colour.hwb}` , () => {
+            const convertFrom = new Colour(colour.hsv).getChannels();
             const convertTo = new Colour(colour.hwb).getChannels();
             expect(HSV2HWB(...convertFrom)).toStrictEqual(convertTo);
         });
     });
-
 });
