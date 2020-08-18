@@ -11,9 +11,12 @@ module.exports = (Red,Green,Blue) => {
     const min = Math.min(Red, Green, Blue);
     const chroma   = max - min;
 
-    H = getHue(Red, Green, Blue, max, chroma);
     W = Math.round(min * 100);
     B = Math.round((1 - max) * 100);
+
+    if(W === 1 - B) return [undefined,W,B];
+    
+    H = getHue(Red, Green, Blue, max, chroma);
 
     return [H,W,B]
 }
