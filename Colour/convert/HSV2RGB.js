@@ -21,10 +21,10 @@ module.exports = (H,S,V) => {
     
     switch(i) {   
         case 6:   
-        case 0: return [v, n, m].map(value => Math.round(value * 255));   
-        case 1: return [n, v, m].map(value => Math.round(value * 255));   
-        case 2: return [m, v, n].map(value => Math.round(value * 255));   
-        case 3: return [m, n, v].map(value => Math.round(value * 255));   
-        case 4: return [n, m, v].map(value => Math.round(value * 255));   
+        case 0: return [V, n, m].map(value => Math.round(value * 255));   
+        case 1: return [n, V, m].map(value => Math.round(value * 255));   
+        case 2: return [m, V, n].map(value => Math.round(value * 255));   
+        case 3: return [m, n, V].map(value => Math.round(value * 255));   
+        case 4: return [n, m, V].map(value => Math.round(value * 255));   
         case 5: return [v, m, n].map(value => Math.round(value * 255));   } 
 }

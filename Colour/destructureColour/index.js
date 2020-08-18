@@ -34,7 +34,9 @@ module.exports = function destructureColour(colourString) {
         type = (colourString.match(/[b-z]+|[B-Z]+/g))[0].toLowerCase();
 
         // check that this is a recognised colour Type
-        if(!recognisedColours.includes(type)) return undefined;
+        if(!recognisedColours.includes(type)) {
+            throw new Error(`unrecognised Colour Type!, currently only supporting colour models of type: ${recognisedColours.join(' | ')}`);
+        };
 
         //use regex to get the digits into an array [ch1,ch2,ch3,alpha]
         channels = (colourString.match(/\d+(\.?\d+)?/g)).map(channel => Number(channel));

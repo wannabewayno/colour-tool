@@ -12,5 +12,5 @@ describe("HSV2RGB()", () => {
             expect(HSV2RGB(...convertFrom)).toStrictEqual(convertTo);
         });
     });
-        
+
 });
