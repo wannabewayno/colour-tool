@@ -34,8 +34,8 @@ test("able to desaturate any colour type", () => {
     const salmon     = new Colour('salmon');
     const salmonRGB  = new Colour('rgb(250,128,114)');
     const salmonHSL  = new Colour('hsl(6,93%,71%)');
-    const salmonHWB  = new Colour('hwb(6,45%,2%)');
-    const salmonCMYK = new Colour('cmyk(0%,49%,54%,2%)');
+    const salmonHWB  = new Colour('hwb(6,44%,2%)');
+    const salmonCMYK = new Colour('cmyk(0%,49.2%,54.3%,2%)');
     const salmonHEX  = new Colour('#FA8072');
 
     expect(salmon.desaturate(20).convert('hsl').getChannels()[1]).toBe(73);
@@ -50,7 +50,7 @@ test("able to saturate any colour type", () => {
     const salmon     = new Colour('salmon');
     const salmonRGB  = new Colour('rgb(250,128,114)');
     const salmonHSL  = new Colour('hsl(6,93%,71%)');
-    const salmonHWB  = new Colour('hwb(6,45%,2%)');
+    const salmonHWB  = new Colour('hwb(6,44%,2%)');
     const salmonCMYK = new Colour('cmyk(0%,49%,54%,2%)');
     const salmonHEX  = new Colour('#FA8072');
 

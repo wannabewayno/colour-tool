@@ -239,7 +239,7 @@ module.exports = class Colour {
      *
      */
     convert(convertTo){
-        covnertTo = convertTo.toLowerCase();
+        convertTo = convertTo.toLowerCase();
 
         // if same colour type, do nothing 🤷
         if(this.type === convertTo){
