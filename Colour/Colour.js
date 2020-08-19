@@ -4,8 +4,9 @@ const RGB2HEX = require('./convert/RGB2HEX');
 const HEX2RGB = require('./convert/HEX2RGB');
 const CMYK2RGB = require('./convert/CMYK2RGB');
 const RGB2CMYK = require('./convert/RGB2CMYK');
-const destructureColour = require('./destructureColour');
-const { bigIntLiteral } = require('@babel/types');
+const HSV2RGB = require('./convert/HSV2RGB');
+const HWB2RGB = require('./convert/HWB2RGB');
+const destructureColour = require('./destructureColour')
 
 
 module.exports = class Colour {
@@ -247,9 +248,12 @@ module.exports = class Colour {
                 if(this.type === 'hex')  this.channels = HEX2RGB(...this.channels);
                 if(this.type === 'hsl')  this.channels = HSL2RGB(...this.channels);
                 if(this.type === 'cmyk') this.channels = CMYK2RGB(...this.channels);
+                if(this.type === 'hsv')  this.channels = HSV2RGB(...this.channels);
+                if(this.type === 'hwb')  this.channels = HWB2RGB(...this.channels);
                 this.type = 'rgb';
                 return this;
             case'hsl':
+                switch(){}
                 if(this.type !== 'rgb') this.convert('rgb');
                 // now with rgb channels
                 this.channels = RGB2HSL(...this.channels);
