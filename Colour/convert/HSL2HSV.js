@@ -1,5 +1,3 @@
-const { mintcream } = require('../destructureColour/CSSColourTable');
-
 require('../mathExtension')();
 
 module.exports = (H,SL,L) => {
