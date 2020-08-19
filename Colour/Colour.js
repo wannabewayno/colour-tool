@@ -1,6 +1,7 @@
 const HSL2RGB = require('./convert/HSL2RGB');
 const RGB2HSL = require('./convert/RGB2HSL');
 const RGB2HEX = require('./convert/RGB2HEX');
+const RGB2HWB = require('./convert/RGB2HWB');
 const HEX2RGB = require('./convert/HEX2RGB');
 const CMYK2RGB = require('./convert/CMYK2RGB');
 const RGB2CMYK = require('./convert/RGB2CMYK');
@@ -276,6 +277,14 @@ module.exports = class Colour {
                 this.type = 'cmyk';
                 return this;
             case 'hwb':
+                if(this.type === 'hsv') this.channels = HSV2HWB(...this.channels);
+                else {
+                    if(this.type !== 'rgb') this.convert('rgb'); 
+                    // now with rgb channels
+                    this.channels = RGB2HWB(...this.channels);
+                }
+                this.type = 'hwb';
+                return this;
             case 'hsv':
                 if(this.type === 'hsl') this.channels = HSL2HSV(...this.channels);
                 else {
