@@ -1,4 +1,5 @@
 // Sample code for color conversions
+// This was provided by w3 in the CSS4 specifications.
 // Conversion can also be done using ICC profiles and a Color Management System
 // For clarity, a library is used for matrix manipulations
 

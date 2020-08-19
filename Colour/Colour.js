@@ -194,10 +194,12 @@ module.exports = class Colour {
         let black;
         let white;
         switch(this.type){
-            case'rgb' : black = 'rgba(0,0,0,1)';   white ='rgba(255,255,255,1)';    break;
-            case'hsl' : black = 'hsla(0,0%,0%,1)'; white ='hsla(0,0%,100%,1)';      break;
-            case'hex' : black = '#000000';         white ='#FFFFFF';                break;
-            case'cmyk': black = 'cmyk(0,0,0,100)'; white ='cmyk(0,0,0,0)';          break;
+            case'rgb' : black = 'rgba(0,0,0,1)';        white ='rgba(255,255,255,1)'; break;
+            case'hsl' : black = 'hsla(0,0%,0%,1)';      white ='hsla(0,0%,100%,1)';   break;
+            case'hex' : black = '#000000';              white ='#FFFFFF';             break;
+            case'cmyk': black = 'cmyk(0%,0%,0%,100%)';  white ='cmyk(0%,0%,0%,0%)';   break;
+            case'hwb' : black = 'hwb(0,0%,100%)';       white ='hwb(0,100%,0%)';      break;
+            case'hsv' : black = 'hsv(0,0%,0%)';         white ='hsv(0,0%,100%)';      break;
             default: console.warn('unrecognised type!, cannot match appropriate colour')
         }
        
@@ -220,6 +222,9 @@ module.exports = class Colour {
                 return `hsla(${H},${S}%,${L}%,${this.alpha})`
             case'hex':
                 return `#${this.channels.join('')}`;
+            case'hsv':
+            case'hwb':
+            case'cmyk':
             default: 
                 return console.warn('Error: unpassable colour type');
         }
