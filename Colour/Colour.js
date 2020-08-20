@@ -9,6 +9,8 @@ const HSV2RGB = require('./convert/HSV2RGB');
 const HWB2RGB = require('./convert/HWB2RGB');
 const destructureColour = require('./destructureColour');
 const HSV2HSL = require('./convert/HSV2HSL');
+const HSI2RGB = require('./convert/HSI2RGB');
+const RGB2HSI = require('./convert/RGB2HSI');
 
 
 module.exports = class Colour {
@@ -253,8 +255,10 @@ module.exports = class Colour {
                 if(this.type === 'cmyk') this.channels = CMYK2RGB(...this.channels);
                 if(this.type === 'hsv')  this.channels = HSV2RGB(...this.channels);
                 if(this.type === 'hwb')  this.channels = HWB2RGB(...this.channels);
+                if(this.type === 'hsi')  this.channels = HSI2RGB(...this.channels);
                 this.type = 'rgb';
                 return this;
+
             case'hsl':
                 if(this.type === 'hsv') this.channels = HSV2HSL(...this.channels);
                 else {
@@ -294,6 +298,13 @@ module.exports = class Colour {
                 }
                 this.type = 'hsv';
                 return this;
+            case 'hsi': {
+                if(this.type !== 'rgb') this.convert('rgb');
+                // now with rgb channels
+                this.channels = RGB2HSI(...this.channels);
+                this.type = 'hsi';
+                return this;
+            }
 
             default:
                 console.warn(`convert doesn't recognise ${convertTo} as a colour to convert to`)

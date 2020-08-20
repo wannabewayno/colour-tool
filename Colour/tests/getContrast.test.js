@@ -19,8 +19,8 @@ test("getContrast() returns a contrast colour of the same type", () => {
     const typeContrastBlackHSL  = new Colour(blackHSL.getContrast()).getType();
     const typeContrastWhiteRGB  = new Colour(whiteRGB.getContrast()).getType();
     const typeContrastWhiteCYMK = new Colour(whiteCYMK.getContrast()).getType();
-    const typeContrastWhiteHEX = new Colour(whiteHEX.getContrast()).getType();
-    const typeContrastBlackHWB = new Colour(blackHWB.getContrast()).getType();
+    const typeContrastWhiteHEX  = new Colour(whiteHEX.getContrast()).getType();
+    const typeContrastBlackHWB  = new Colour(blackHWB.getContrast()).getType();
     expect(typeContrastBlackHSL).toBe('hsl');
     expect(typeContrastWhiteRGB).toBe('rgb');
     expect(typeContrastWhiteCYMK).toBe('cmyk');
