@@ -41,6 +41,11 @@ describe("destructureColour Unit tests", () => {
         expect(destructureColour('cmyka(0%, 49%, 54%, 2%, 1)')).toStrictEqual({type:'cmyk',channels:[0,49,54,2,1]});
     });
 
+    it('deconstructs a hsi string', () => {
+        expect(destructureColour('hsi(162,80%,49.5%)')).toStrictEqual({type:'hsi',channels:[162,80,49.5]});
+        expect(destructureColour('hsia(162,80%,49.5%, 1)')).toStrictEqual({type:'hsi',channels:[162,80,49.5,1]});
+    });
+
     it('deconstructs "transparent" into an rgb object with O opacity', () => {
         expect(destructureColour('transparent')).toStrictEqual({type:'rgb',channels:[0,0,0,0]});
     });

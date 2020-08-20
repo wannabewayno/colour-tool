@@ -1,1 +1,1 @@
-module.exports = ['rgb','hsl','cmyk','hwb','hex','hsv'];
+module.exports = ['rgb','hsl','cmyk','hwb','hex','hsv','hsi','cielab','cielch'];

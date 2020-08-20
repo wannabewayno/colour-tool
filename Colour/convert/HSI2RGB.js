@@ -1,105 +1,50 @@
 require('../mathExtension')();
 
 module.exports = (H,S,I) => {
-    H /= 60;  // range from [0,360] to [0,6];
     S /= 100; // range from [0,100] to [0,1];
     I /= 100; // range from [0,100] to [0,1];
 
-    const Z = 1 - Math.abs(H % 2 - 1);
-    const chroma = (3 * I * S)/ 1 + Z;
-    const X = chroma * Z;
+    // const Z = 1 - Math.abs((H % 2) - 1);
+    // const chroma = (3 * I * S)/ 1 + Z;
+    // const X = chroma * Z;
+    
+    const deg2rad = deg => deg * Math.PI/180;
 
-    let RGB;
-    switch(Math.floor(H)) {   
-        case 0: RGB = [chroma, X, 0]; break;   
-        case 1: RGB = [X, chroma, 0]; break;   
-        case 2: RGB = [0, chroma, X]; break;   
-        case 3: RGB = [0, X, chroma]; break;   
-        case 4: RGB = [X, 0, chroma]; break;   
-        case 5: RGB = [chroma, 0, X]; break;
+    // exception for Satutation of 0. (neutral colour, all the same)
+    if(S === 0) return [Math.round(I*255),Math.round(I*255),Math.round(I*255)];
+
+    // hsi(251) 67 (64,66), 232 (233,235) at 1.005; hsi(251) 232 (233,235) 
+    const X = I*(1 - S);
+    const Y = H => { return I * (
+        1 + (
+            S * Math.cos(deg2rad(H)) / Math.cos(deg2rad(60) - deg2rad(H))
+        )
+    )};
+    const Z = H => 3 * I - (X + Y(H));
+
+    const h = Math.floor(H/120);  // range from [0,360] to [0,3];
+    
+    const RGB = [];
+    switch(h) {   
+        case 0:{
+            RGB[0] = Y(H);
+            RGB[1] = Z(H);
+            RGB[2] = X;
+            break;
+        };   
+        case 1:{
+            RGB[0] = X;
+            RGB[1] = Y(H - 120);
+            RGB[2] = Z(H - 120);
+            break;
+        };   
+        case 2:{
+            RGB[0] = Z(H - 240);
+            RGB[1] = X;
+            RGB[2] = Y(H - 240);
+            break;
+        };
     }
-    const m = I * (1 - S);
-    RGB.map(value => value + m);
 
-    return RGB;
+    return RGB.map(value => Math.round(value * 255));
 }
-
-
-Color	    Channel	            Hue	        Chroma	          Component	        Luma            Saturation
-        R	  G	    B	    H	    H2	    C	C2	        V	  L	    I	    Y601        SV      SL      SI
-{
-    hex:#FFFFFF
-    rgb:[100%,100%,100%]
-    hsv:[N/A            100%  100%  100%    100%        0%      0%      0%
-{
-    hex:#808080
-    rgb:[50%	,50% ,50%	]
-    hsv:[N/A            50%	  50%   50%	    50%         0%      0%      0%
-{
-    hex:#000000
-    rgb:[0%  ,0%  ,0%  ]
-    hsv:[N/A            0%    0%    0%      0%          0%      0%      0%
-{
-    hex:#FF0000
-    rgb:[100%,0%  ,0%  ]
-    hsv:[0°             100%  50%   33.3%   29.9%       100%    100%    100%
-{
-    hex:#BFBF00
-    rgb:[75%	,75% ,0%  ]
-    hsv:[60°            75%	  37.5% 50%     66.4%       100%    100%    100%
-{
-    hex:#008000
-    rgb:[0%  ,50% ,0%  ]
-    hsv:[120            50%	  25%   16.7%   29.3%       100%    100%    100%
-{
-    hex:#80FFFF
-    rgb:[50%	,100%,100%]
-    hsv:[180            100%  75%   83.3%   85%         50%	    100%    40%
-{
-    hex:#8080FF
-    rgb:[50%	,50% ,100%]
-    hsv:[240            100%  75%   66.7%   55.7%       50%	    100%    25%
-{
-    hex:#BF40BF
-    rgb:[75%	,25% ,75%	]
-    hsv:[300            75%	  50%   58.3%   45.7%       66.7%   50%     57.1%
-{
-    hex:#A0A424
-    rgb:[62.8,64.3,14.2]
-    %  hsv:[61.% 49.4%	    64.3% 39.3% 47.1%   58.1%       77.9%   63.8%   69.9%
-{
-    hex:#411BEA
-    rgb:[25.5,10.4,91.8]
-    %  hsv:[251% 75%       91.8% 51.1% 42.6%   24.2%       88.7%   83.2%   75.6%
-{
-    hex:#1EAC41
-    rgb:[11.6,67.5,25.5]
-    %  hsv:[134% 50.4%	    67.5% 39.6% 34.9%   46%         82.8%   70.7%   66.7%
-{
-    hex:#F0C80E
-    rgb:[94.1,78.5,5.3%]
-    hsv:[49.% 82.1%	    94.1% 49.8% 59.3%   74.8%       94.4%   89.3%   91.1%
-{
-    hex:#B430E5
-    rgb:[70.4,18.7,89.7]
-    %  hsv:[283  63.6%     89.7% 54.3% 59.6%   42.3%       79.2%   77.5%   68.6%
-{
-    hex:#ED7651
-    rgb:[93.1,46.3,31.6]
-    %  hsv:[14.% 55.6%	    93.1% 62.4% 57%	    58.6%       66.1%   81.7%   44.6%
-{
-    hex:#FEF888
-    rgb:[99.8,97.4,53.2]
-    %  hsv:[56.% 45.4%	    99.8% 76.5% 83.5%   93.1%       46.7%   99.1%   36.3%
-{
-    hex:#19CB97
-    rgb:[9.9%,79.5,59.1]
-    %  hsv:[162% 62%       79.5% 44.7% 49.5%   56.4%       87.5%   77.9%   80%
-{
-    hex:#362698
-    rgb:[21.1,14.9,59.7]
-    %  hsv:[248% 42%       59.7% 37.3% 31.9%   21.9%       75%	    60.1%   53.3%
-{
-    hex:#7E7EB8
-    rgb:[49.5,49.3,72.1]
-    %  hsv:[240% 22.7%	    72.1% 60.8% 57%	    52%         31.6%   29%     13.5%
