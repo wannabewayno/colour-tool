@@ -1,6 +1,4 @@
-require('../mathExtension')();
-const getC2 = require('./lib/getC2');
-const getH2 = require('./lib/getH2');
+const getHue = require('./lib/getHue');
 const getLuma = require('./lib/getLuma');
 
 module.exports = (R,G,B,luma) => {
@@ -10,14 +8,13 @@ module.exports = (R,G,B,luma) => {
 
     luma = !luma? '601':luma;
 
-    const H2 = getH2(R,G,B);
-    const C2 = getC2(R,G,B);
+    const H  = getHue(R,G,B);
+    const C  = Math.max(R,G,B) - Math.min(R,G,B);
     const Y  = getLuma(R,G,B,luma);
 
     return [
-        H2,
-        C2,
-        Math.decimal(Y * 100,1)
+        H,
+        Math.decimal(C * 100, 1),
+        Math.decimal( Y * 100,1)
     ];
-
 }
