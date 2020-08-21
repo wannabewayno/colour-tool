@@ -11,8 +11,8 @@ module.exports = (Red,Green,Blue) => {
     const min = Math.min(Red, Green, Blue);
     const chroma   = max - min;
 
-    W = Math.round(min * 100);
-    B = Math.round((1 - max) * 100);
+    W = Math.decimal(min * 100,1);
+    B = Math.decimal((1 - max) * 100,1);
 
     if(W === 1 - B) return [undefined,W,B];
     

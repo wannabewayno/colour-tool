@@ -1,0 +1,1 @@
+module.exports = (R,G,B) => (G - B) * Math.pow(3,0.5)/2

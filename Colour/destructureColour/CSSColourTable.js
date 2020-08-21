@@ -113,7 +113,7 @@ module.exports = CSSColourTable = {
   },
   lime: {
     hex: "#00FF00",
-    rgb: "rgb(0.255.0)",
+    rgb: "rgb(0,255,0)",
   },
   forestgreen: {
     hex: "#228B22",

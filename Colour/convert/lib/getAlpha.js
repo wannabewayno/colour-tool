@@ -1,0 +1,1 @@
+module.exports = (R,G,B) => (2*R - G - B)/2

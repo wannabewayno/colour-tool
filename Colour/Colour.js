@@ -1,16 +1,20 @@
 const HSL2RGB = require('./convert/HSL2RGB');
+const HSL2HSV = require('./convert/HSL2HSV');
 const RGB2HSL = require('./convert/RGB2HSL');
 const RGB2HEX = require('./convert/RGB2HEX');
 const RGB2HWB = require('./convert/RGB2HWB');
+const RGB2CMYK = require('./convert/RGB2CMYK');
+const RGB2HSI = require('./convert/RGB2HSI');
+const RGB2HSV = require('./convert/RGB2HSV');
 const HEX2RGB = require('./convert/HEX2RGB');
 const CMYK2RGB = require('./convert/CMYK2RGB');
-const RGB2CMYK = require('./convert/RGB2CMYK');
-const HSV2RGB = require('./convert/HSV2RGB');
 const HWB2RGB = require('./convert/HWB2RGB');
-const destructureColour = require('./destructureColour');
 const HSV2HSL = require('./convert/HSV2HSL');
+const HSV2RGB = require('./convert/HSV2RGB');
+const HSV2HWB = require('./convert/HSV2HWB');
 const HSI2RGB = require('./convert/HSI2RGB');
-const RGB2HSI = require('./convert/RGB2HSI');
+const destructureColour = require('./destructureColour');
+
 
 
 module.exports = class Colour {

@@ -1,5 +1,4 @@
-const mathExtension = require('../mathExtension');
-mathExtension();
+require('../mathExtension')();
 
 const getHue = require('./lib/getHue');
 const getSaturation = require('./lib/getSaturation');
@@ -17,9 +16,13 @@ module.exports = function RGB2HSL( R, G, B ) {
 
     const hue = getHue( R, G, B, max, chroma );
     let lightness = getLightness(max,min)
-    const saturation = Math.round(getSaturation(chroma,lightness) * 100);
-    lightness = Math.round(lightness*100);
+    const saturation = Math.decimal(getSaturation(chroma,lightness) * 100,1);
+    lightness = Math.decimal(lightness*100,1);
 
-    return [hue, saturation, lightness];
+    return [
+        hue,
+        saturation > 100? 100: saturation < 0? 0: saturation,
+        lightness > 100? 100: lightness < 0 ? 0: lightness,
+    ];
 }
   

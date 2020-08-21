@@ -1,4 +1,5 @@
 const Colour = require('../Colour');
+const toBeWithinRange = require('../convert/tests/toBeWithinRange');
 
 test("colour.saturate(20), saturates a colour by 20%", () => {
     const colour = new Colour('hsla(0,50,50,1)');
@@ -38,12 +39,12 @@ test("able to desaturate any colour type", () => {
     const salmonCMYK = new Colour('cmyk(0%,49.2%,54.3%,2%)');
     const salmonHEX  = new Colour('#FA8072');
 
-    expect(salmon.desaturate(20).convert('hsl').getChannels()[1]).toBe(73);
-    expect(salmonRGB.desaturate(20).convert('hsl').getChannels()[1]).toBe(73);
-    expect(salmonHSL.desaturate(20).convert('hsl').getChannels()[1]).toBe(73);
-    expect(salmonHWB.desaturate(20).convert('hsl').getChannels()[1]).toBe(73);
-    expect(salmonCMYK.desaturate(20).convert('hsl').getChannels()[1]).toBe(73);
-    expect(salmonHEX.desaturate(20).convert('hsl').getChannels()[1]).toBe(73);
+    expect(salmon.desaturate(20).convert('hsl').getChannels()[1]).toBeWithinRange(73-0.5,73+0.5)
+    expect(salmonRGB.desaturate(20).convert('hsl').getChannels()[1]).toBeWithinRange(73-0.5,73+0.5)
+    expect(salmonHSL.desaturate(20).convert('hsl').getChannels()[1]).toBeWithinRange(73-0.5,73+0.5)
+    expect(salmonHWB.desaturate(20).convert('hsl').getChannels()[1]).toBeWithinRange(73-0.5,73+0.5)
+    expect(salmonCMYK.desaturate(20).convert('hsl').getChannels()[1]).toBeWithinRange(73-0.5,73+0.5)
+    expect(salmonHEX.desaturate(20).convert('hsl').getChannels()[1]).toBeWithinRange(73-0.5,73+0.5)
 });
 
 test("able to saturate any colour type", () => {

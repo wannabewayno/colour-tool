@@ -1,4 +1,4 @@
-module.exports = [
+[
     {
         "name": "Blue",
         "rgb": "rgb(0, 0, 255)",

@@ -9,8 +9,8 @@ require('../mathExtension')();
 module.exports = (H,S,V) => {
     S /= 100
     V /= 100
-    const W = Math.round((1 - S) * V * 100);
-    const B = Math.round((1 - V) * 100);
+    const W = Math.decimal((1 - S) * V * 100,1);
+    const B = Math.decimal((1 - V) * 100,1);
 
     return [H,W,B];
 }

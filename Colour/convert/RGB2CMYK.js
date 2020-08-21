@@ -9,10 +9,10 @@ module.exports = (R,G,B) => {
 
     const CMYChannel = RGBChannel => (1 - RGBChannel - K) / (1 - K);
   
-    const C = Math.round( CMYChannel(R) * 100 ); 
-    const M = Math.round( CMYChannel(G) * 100 );
-    const Y = Math.round( CMYChannel(B) * 100 );
-          K = Math.round( K * 100 );
+    const C = Math.decimal( CMYChannel(R) * 100 ,1); 
+    const M = Math.decimal( CMYChannel(G) * 100 ,1);
+    const Y = Math.decimal( CMYChannel(B) * 100 ,1);
+          K = Math.decimal( K * 100 ,1);
 
     return [
         isNaN(C)? 0:C,
