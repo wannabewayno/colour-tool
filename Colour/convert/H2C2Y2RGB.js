@@ -14,7 +14,6 @@ module.exports = (H2,C2,Y,luma) => {
         case 3:{ RGB = [0,X,C]; break;}
         case 4:{ RGB = [X,0,C]; break;}
         case 5:{ RGB = [C,0,X]; break;}
-        default:
     }
 
     const m = Y - getLuma(...RGB,luma);
