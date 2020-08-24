@@ -1,4 +1,5 @@
 const { lin_sRGB, lin_sRGB_to_XYZ, D65_to_D50, XYZ_to_Lab } = require('./lib/helpers');
+require('../mathExtension')();
 
 /**
  * Converts an sRGB colour to a device independent LAB colour
@@ -20,14 +21,10 @@ module.exports =  (...RGB) => {
 
     // Convert from a D65 white point used in the sRGB standard to D50 whitepoint used in LAB
     const D50XYZ = D65_to_D50(D65XYZ);
-    
-    console.log('D65XYZ:',D65XYZ);
-    console.log('D50XYZ:',D50XYZ);
-    console.log('----------------------------------------------------');
 
     // Convert the D50 XYZ space into LAB space
     const LAB = XYZ_to_Lab(D50XYZ);
 
     // return LAB
-    return LAB
+    return LAB.map(channel => Math.decimal(channel,1));
 }
