@@ -26,7 +26,7 @@ module.exports =  (...RGB) => {
     console.log('----------------------------------------------------');
 
     // Convert the D50 XYZ space into LAB space
-    const LAB = XYZ_to_Lab(D65XYZ);
+    const LAB = XYZ_to_Lab(D50XYZ);
 
     // return LAB
     return LAB

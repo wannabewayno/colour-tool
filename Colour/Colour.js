@@ -6,6 +6,10 @@ const RGB2HWB = require('./convert/RGB2HWB');
 const RGB2CMYK = require('./convert/RGB2CMYK');
 const RGB2HSI = require('./convert/RGB2HSI');
 const RGB2HSV = require('./convert/RGB2HSV');
+const RGB2LAB = require('./convert/RGB2LAB');
+const RGB2LCH = require('./convert/RGB2LCH');
+const LAB2RGB = require('./convert/LAB2RGB');
+const LCH2RGB = require('./convert/LCH2RGB');
 const HEX2RGB = require('./convert/HEX2RGB');
 const CMYK2RGB = require('./convert/CMYK2RGB');
 const HWB2RGB = require('./convert/HWB2RGB');
@@ -260,6 +264,8 @@ module.exports = class Colour {
                 if(this.type === 'hsv')  this.channels = HSV2RGB(...this.channels);
                 if(this.type === 'hwb')  this.channels = HWB2RGB(...this.channels);
                 if(this.type === 'hsi')  this.channels = HSI2RGB(...this.channels);
+                if(this.type === 'lab')  this.channels = LAB2RGB(...this.channels);
+                if(this.type === 'lch')  this.channels = LCH2RGB(...this.channels);
                 this.type = 'rgb';
                 return this;
 
@@ -309,9 +315,21 @@ module.exports = class Colour {
                 this.type = 'hsi';
                 return this;
             }
-
-            default:
-                console.warn(`convert doesn't recognise ${convertTo} as a colour to convert to`)
+            case 'lab': {
+                if(this.type !== 'rgb') this.convert('rgb');
+                // now with rgb channels
+                this.channels = RGB2LAB(...this.channels);
+                this.type = 'lab';
+                return this;
+            }
+            case 'lch': {
+                if(this.type !== 'rgb') this.convert('rgb');
+                    // now with rgb channels
+                    this.channels = RGB2LCH(...this.channels);
+                    this.type = 'lch';
+                    return this;
+            }
+            default: console.warn(`convert doesn't recognise ${convertTo} as a colour to convert to`)
         }
     }
 
