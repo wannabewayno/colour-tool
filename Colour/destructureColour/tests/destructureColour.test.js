@@ -51,6 +51,10 @@ describe("destructureColour Unit tests", () => {
     });
 
     it('deconstructs a lab string', () => {
+        expect(destructureColour('lab(55, 60, 40)')).toStrictEqual({type:'lab',channels:[55,60,40]});
+    });
+
+    it('deconstructs a lab string with negative numbers', () => {
         expect(destructureColour('lab(55, 60, -40)')).toStrictEqual({type:'lab',channels:[55,60,-40]});
     });
 

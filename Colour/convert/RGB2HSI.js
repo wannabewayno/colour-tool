@@ -1,5 +1,5 @@
 require('../mathExtension')();
-const getH2 = require('./lib/getHue');
+const getH2 = require('./lib/getH2');
 
 module.exports = (R,G,B) => {
 
@@ -10,7 +10,7 @@ module.exports = (R,G,B) => {
     const min = Math.min(R, G, B);
 
     
-
+    const H2 = getH2(R,G,B);
     const I = (R + G + B)/3;
     const S = I === 0 ? 0 : (1 - min/I);
 

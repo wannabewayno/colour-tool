@@ -9,7 +9,7 @@ require('../mathExtension')();
  * @return {Array} - [L,A,B] colour space
  */
 module.exports =  (...RGB) => {
-    console.log('RGB:',RGB);
+
     // RGB range from [0,255] to [0,1];
     RGB = RGB.map(channel => channel/255);
     
