@@ -9,11 +9,9 @@ const RGB2LAB = require('./RGB2LAB');
  * @return {Array} - [L,C,H] colour space
  */
 module.exports =  (...RGB) => {
-    // range from [0,255] to [0,1]
-    RGB = RGB.map(channel => channel/255);
 
     // convert RGB2LAB
-    const LAB = RGB2LAB(RGB);
+    const LAB = RGB2LAB(...RGB);
 
     // now to LCH space
     const LCH = Lab_to_LCH(LAB);

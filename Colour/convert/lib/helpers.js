@@ -4,6 +4,7 @@
 const { create, all } = require('mathjs');
 
 // create a new math instance for matrix support
+const config = { };
 const math = create(all, config)
 
 module.exports = {
@@ -291,12 +292,13 @@ module.exports = {
     var ε = 216/24389;  // 6^3/29^3
     var κ = 24389/27;   // 29^3/3^3
     var white = [0.96422, 1.00000, 0.82521]; // D50 reference white
+    // var white = [0.95047, 1.00000, 1.08883]; // D65 reference white
   
     // compute xyz, which is XYZ scaled relative to reference white
     var xyz = XYZ.map((value, i) => value / white[i]);
   
     // now compute f
-    var f = xyz.map(value => value > ε ? Math.cbrt(value) : (κ * value + 16)/116);
+    var f = xyz.map(value => value > ε ? Math.cbrt(value) : (κ * value + 16)/116 );
   
     return [
       (116 * f[1]) - 16,    // L
@@ -311,6 +313,7 @@ module.exports = {
     var κ = 24389/27;   // 29^3/3^3
     var ε = 216/24389;  // 6^3/29^3
     var white = [0.96422, 1.00000, 0.82521]; // D50 reference white
+    // var white = [0.95047, 1.00000, 1.08883]; // D65 reference white
     var f = [];
   
     // compute f, starting with the luminance-related term
