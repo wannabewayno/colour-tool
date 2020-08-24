@@ -50,6 +50,14 @@ describe("destructureColour Unit tests", () => {
         expect(destructureColour('transparent')).toStrictEqual({type:'rgb',channels:[0,0,0,0]});
     });
 
+    it('deconstructs a lab string', () => {
+        expect(destructureColour('lab(55, 60, -40)')).toStrictEqual({type:'lab',channels:[55,60,-40]});
+    });
+
+    it('deconstructs a lch string', () => {
+        expect(destructureColour('lch(55, 60, 40)')).toStrictEqual({type:'lch',channels:[55,60,40]});
+    });
+
     it('Should throw an error if an unrecognised colour type is entered', () => {
         const error = new Error(`unrecognised Colour Type!, currently only supporting colour models of type: ${recognisedColours.join(' | ')}`);
         expect(() => destructureColour('hsld(6, 93%, 71%)')).toThrowError(error);

@@ -39,7 +39,7 @@ module.exports = function destructureColour(colourString) {
         };
 
         //use regex to get the digits into an array [ch1,ch2,ch3,alpha]
-        channels = (colourString.match(/\d+(\.?\d+)?/g)).map(channel => Number(channel));
+        channels = (colourString.match(/\-?\d+(\.?\d+)?/g)).map(channel => Number(channel));
     }
 
     //return an object with keys type and channels

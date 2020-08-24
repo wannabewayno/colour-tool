@@ -10,6 +10,8 @@ const RGB2LAB = require('./convert/RGB2LAB');
 const RGB2LCH = require('./convert/RGB2LCH');
 const LAB2RGB = require('./convert/LAB2RGB');
 const LCH2RGB = require('./convert/LCH2RGB');
+const LAB2LCH = require('./convert/LAB2LCH');
+const LCH2LAB = require('./convert/LCH2LAB');
 const HEX2RGB = require('./convert/HEX2RGB');
 const CMYK2RGB = require('./convert/CMYK2RGB');
 const HWB2RGB = require('./convert/HWB2RGB');
@@ -18,6 +20,7 @@ const HSV2RGB = require('./convert/HSV2RGB');
 const HSV2HWB = require('./convert/HSV2HWB');
 const HSI2RGB = require('./convert/HSI2RGB');
 const destructureColour = require('./destructureColour');
+
 
 
 
@@ -316,18 +319,24 @@ module.exports = class Colour {
                 return this;
             }
             case 'lab': {
-                if(this.type !== 'rgb') this.convert('rgb');
-                // now with rgb channels
-                this.channels = RGB2LAB(...this.channels);
-                this.type = 'lab';
-                return this;
+                if(this.type === 'lch') this.channels = LCH2LAB(...this.channels);
+                else {
+                    if(this.type !== 'rgb') this.convert('rgb');
+                    // now with rgb channels
+                    this.channels = RGB2LAB(...this.channels);
+                    this.type = 'lab';
+                    return this;
+                }
             }
             case 'lch': {
-                if(this.type !== 'rgb') this.convert('rgb');
-                    // now with rgb channels
-                    this.channels = RGB2LCH(...this.channels);
-                    this.type = 'lch';
-                    return this;
+                if(this.type === 'lab') this.channels = LAB2LCH(...this.channels);
+                else {
+                    if(this.type !== 'rgb') this.convert('rgb');
+                        // now with rgb channels
+                        this.channels = RGB2LCH(...this.channels);
+                        this.type = 'lch';
+                        return this;
+                }
             }
             default: console.warn(`convert doesn't recognise ${convertTo} as a colour to convert to`)
         }
