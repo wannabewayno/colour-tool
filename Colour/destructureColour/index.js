@@ -31,7 +31,7 @@ module.exports = function destructureColour(colourString) {
     } else {
 
         //use regex to get the letters, get rid of the 'a' for alpha, we'll always set this as default 1
-        type = (colourString.match(/[b-z]+|[B-Z]+/g))[0].toLowerCase();
+        type = (colourString.match(/([a-z]|[A-Z])+[^aA\s\(\)]/g))[0].toLowerCase();
 
         // check that this is a recognised colour Type
         if(!recognisedColours.includes(type)) {
