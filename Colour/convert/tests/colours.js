@@ -22,7 +22,7 @@ module.exports = [
         "ncol": "ncol(R0, 100%, 0%)",
         "hsi": "hsi(0,0%,100%)",
         "lab": "lab(100%, 0, 0)",
-        "lch": "lch(100%, 0, 157deg)"
+        "lch": "lch(100%, 0, 180deg)"
     },
     {
         "rgb": "rgb(121, 112, 204)",
@@ -105,7 +105,7 @@ module.exports = [
         "cmyk": "cmyk(0%,0%,0%,49.8%)",
         "hwb": "hwb(0,50.2%,49.8%)",
         "lab": "lab(54%, 0, 0)",
-        "lch": "lch(54%, 0, 157deg)"
+        "lch": "lch(54%, 0, 180deg)"
     },
     {
         "hex": "#BFBF00",
