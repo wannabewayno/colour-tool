@@ -21,11 +21,11 @@ module.exports = (H,W,B) => {
     const n = W + f * (1 - sumWB);
     
     switch(i) {
-        case 0: return [v, n, W].map(value => Math.round(value * 255));
-        case 1: return [n, v, W].map(value => Math.round(value * 255));
-        case 2: return [W, v, n].map(value => Math.round(value * 255));
-        case 3: return [W, n, v].map(value => Math.round(value * 255));
-        case 4: return [n, W, v].map(value => Math.round(value * 255));
-        case 5: return [v, W, n].map(value => Math.round(value * 255));
+        case 0: return [v, n, W].map(value => Math.round(value * 255)).map(channel => channel < 0 ? 0:channel);
+        case 1: return [n, v, W].map(value => Math.round(value * 255)).map(channel => channel < 0 ? 0:channel);
+        case 2: return [W, v, n].map(value => Math.round(value * 255)).map(channel => channel < 0 ? 0:channel);
+        case 3: return [W, n, v].map(value => Math.round(value * 255)).map(channel => channel < 0 ? 0:channel);
+        case 4: return [n, W, v].map(value => Math.round(value * 255)).map(channel => channel < 0 ? 0:channel);
+        case 5: return [v, W, n].map(value => Math.round(value * 255)).map(channel => channel < 0 ? 0:channel);
     }
 }

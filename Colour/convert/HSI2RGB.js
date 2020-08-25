@@ -46,5 +46,5 @@ module.exports = (H,S,I) => {
         };
     }
 
-    return RGB.map(value => Math.round(value * 255));
+    return RGB.map(channel => Math.round(channel * 255)).map(channel => channel < 0 ? 0 : channel);
 }

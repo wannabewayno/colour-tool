@@ -19,5 +19,9 @@ module.exports = (H2,C2,Y,luma) => {
     const m = Y - getLuma(...RGB,luma);
     const [R,G,B] = RGB.map(channel => Math.round( (channel + m) * 255))
 
-    return [R,G,B]
+    return [
+        R < 0 ? 0:R,
+        G < 0 ? 0:G,
+        B < 0 ? 0:B,
+    ];
 }

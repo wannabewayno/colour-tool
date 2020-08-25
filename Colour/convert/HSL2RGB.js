@@ -35,5 +35,5 @@ module.exports = (H,S,L) => {
 
     RGB = RGB.map(value => Math.round((value + m) * 255));
 
-    return RGB;
+    return RGB.map(channel => channel < 0 ? 0:channel);
 }

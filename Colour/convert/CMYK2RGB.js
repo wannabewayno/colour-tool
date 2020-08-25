@@ -11,5 +11,9 @@ module.exports = (C,M,Y,K) => {
     const G = RGBChannel(M);
     const B = RGBChannel(Y);
 
-    return [R,G,B];
+    return [
+        R < 0 ? 0:R,
+        G < 0 ? 0:G,
+        B < 0 ? 0:B,
+    ];
 }
