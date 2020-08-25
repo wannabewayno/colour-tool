@@ -332,12 +332,14 @@ module.exports = {
     return xyz.map((value, i) => value * white[i]);
   },
   
-  Lab_to_LCH(Lab) {
+  Lab_to_LCH(LAB) {
+    // pure white, pure black or no chroma, no hue information can be used
+    if(LAB[0] === 100 || LAB[1] === 0 ||LAB[0] === 0) return [LAB[0],0,0];
     // Convert to polar form
-    var hue = Math.atan2(Lab[2], Lab[1]) * 180 / Math.PI;
+    var hue = Math.atan2(LAB[2], LAB[1]) * 180 / Math.PI;
     return [
-      Lab[0], // L is still L
-      Math.sqrt(Math.pow(Lab[1], 2) + Math.pow(Lab[2], 2)), // Chroma
+      LAB[0], // L is still L
+      Math.sqrt(Math.pow(LAB[1], 2) + Math.pow(LAB[2], 2)), // Chroma
       hue >= 0 ? hue : hue + 360 // Hue, in degrees [0 to 360)
     ];
   },

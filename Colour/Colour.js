@@ -324,9 +324,9 @@ module.exports = class Colour {
                     if(this.type !== 'rgb') this.convert('rgb');
                     // now with rgb channels
                     this.channels = RGB2LAB(...this.channels);
-                    this.type = 'lab';
-                    return this;
                 }
+                this.type = 'lab';
+                return this;
             }
             case 'lch': {
                 if(this.type === 'lab') this.channels = LAB2LCH(...this.channels);
@@ -334,9 +334,9 @@ module.exports = class Colour {
                     if(this.type !== 'rgb') this.convert('rgb');
                         // now with rgb channels
                         this.channels = RGB2LCH(...this.channels);
-                        this.type = 'lch';
-                        return this;
                 }
+                this.type = 'lch';
+                return this;
             }
             default: console.warn(`convert doesn't recognise ${convertTo} as a colour to convert to`)
         }
