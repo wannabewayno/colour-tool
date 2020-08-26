@@ -1,6 +1,7 @@
 // Sample code for color conversions
 // This was provided by w3 in the CSS4 specifications.
 // Conversion can also be done using ICC profiles and a Color Management System
+require('../../mathExtension')();
 const { create, all } = require('mathjs');
 
 // create a new math instance for matrix support
@@ -335,6 +336,7 @@ module.exports = {
   Lab_to_LCH(LAB) {
     // pure white, pure black or no chroma, no hue information can be used
     if(LAB[0] === 100 || LAB[1] === 0 ||LAB[0] === 0) return [LAB[0],0,0];
+
     // Convert to polar form
     var hue = Math.atan2(LAB[2], LAB[1]) * 180 / Math.PI;
     return [
@@ -345,11 +347,12 @@ module.exports = {
   },
   
   LCH_to_Lab(LCH) {
+    
     // Convert from polar form
     return [
       LCH[0], // L is still L
       LCH[1] * Math.cos(LCH[2] * Math.PI / 180), // a
-      LCH[1] * Math.sin(LCH[2] * Math.PI / 180) // b
+      LCH[1] * Math.sin(LCH[2] * Math.PI / 180), // b
     ];
   }
 }

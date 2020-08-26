@@ -3,17 +3,12 @@ require('../mathExtension')();
 module.exports = (H,S,I) => {
     S /= 100; // range from [0,100] to [0,1];
     I /= 100; // range from [0,100] to [0,1];
-
-    // const Z = 1 - Math.abs((H % 2) - 1);
-    // const chroma = (3 * I * S)/ 1 + Z;
-    // const X = chroma * Z;
     
     const deg2rad = deg => deg * Math.PI/180;
 
     // exception for Satutation of 0. (neutral colour, all the same)
     if(S === 0) return [Math.round(I*255),Math.round(I*255),Math.round(I*255)];
 
-    // hsi(251) 67 (64,66), 232 (233,235) at 1.005; hsi(251) 232 (233,235) 
     const X = I*(1 - S);
     const Y = H => { return I * (
         1 + (
@@ -45,6 +40,5 @@ module.exports = (H,S,I) => {
             break;
         };
     }
-
     return RGB.map(channel => Math.round(channel * 255)).map(channel => channel < 0 ? 0 : channel);
 }

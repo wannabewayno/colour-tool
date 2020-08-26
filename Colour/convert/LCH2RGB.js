@@ -10,5 +10,6 @@ const LAB2RGB = require('./LAB2RGB');
  */
 module.exports = (...LCH) => {
     const LAB = LCH_to_Lab(LCH);
+
     return LAB2RGB(...LAB).map(channel => channel < 0 ? 0:channel);
 }

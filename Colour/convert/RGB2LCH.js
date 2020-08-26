@@ -17,5 +17,5 @@ module.exports =  (...RGB) => {
     const LCH = Lab_to_LCH(LAB);
 
     // return LCH
-    return LCH.map(channel => Math.decimal(channel,1));
+    return LCH.map(channel => Math.decimal(channel,2));
 }

@@ -19,6 +19,6 @@ module.exports =  (...LAB) => {
 
     // Gamma encode the linear sRGB
     const RGB = gam_sRGB(linearRGB);
-
-    return RGB.map(channel => Math.round(channel*255)).map(channel => channel < 0 ? 0:channel);
+   
+    return RGB.map(channel => Math.round(channel*255)).map(channel => channel <= 0 ? 0:channel);
 }

@@ -26,5 +26,5 @@ module.exports =  (...RGB) => {
     const LAB = XYZ_to_Lab(D50XYZ);
 
     // return LAB
-    return LAB.map(channel => Math.decimal(channel,1));
+    return LAB.map(channel => Math.decimal(channel,2));
 }

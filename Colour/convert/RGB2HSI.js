@@ -16,7 +16,7 @@ module.exports = (R,G,B) => {
 
     return [
         Math.round(H2),
-        Math.decimal(S * 100,1),
-        Math.decimal(I * 100,1),
+        Math.decimal(S * 100,2),
+        Math.decimal(I * 100,2),
     ];
 }
