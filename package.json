@@ -1,6 +1,6 @@
 {
   "name": "colour-tool",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "description": "dev-tool that makes colours easier to deal with",
   "main": "./Colour/Colour.js",
   "dependencies": {
