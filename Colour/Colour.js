@@ -51,15 +51,15 @@ module.exports = class Colour {
         switch(this.type){
             case'rgb':
                 const { r,R, g,G, b,B } = channels;
-                if(R!==undefined|r!==undefined) this.channels[0] = R!==undefined?R:r;
-                if(G!==undefined|g!==undefined) this.channels[1] = G!==undefined?G:g;
-                if(B!==undefined|b!==undefined) this.channels[2] = B!==undefined?B:b;
+                if(R !== undefined || r !== undefined ) this.channels[0] = R ?? r;
+                if(G !== undefined || g !== undefined ) this.channels[1] = G ?? g;
+                if(B !== undefined || b !== undefined ) this.channels[2] = B ?? b;
                 return this
             case'hsl':
                 const { h,H, s,S, l,L } = channels;
-                if(H!==undefined|h!==undefined) this.channels[0] = H!==undefined?H:h;
-                if(S!==undefined|s!==undefined) this.channels[1] = S!==undefined?S:s;
-                if(L!==undefined|l!==undefined) this.channels[2] = L!==undefined?L:l;
+                if(H !== undefined || h!==undefined) this.channels[0] = H ?? h;
+                if(S !== undefined || s!==undefined) this.channels[1] = S ?? s;
+                if(L !== undefined || l!==undefined) this.channels[2] = L ?? l;
                 return this
             default: 
                 console.error("Can't set Colour channels, type is undefined")
@@ -136,7 +136,7 @@ module.exports = class Colour {
         // convert back to original type if not hsl
         if(typeBefore !== 'hsl') this.convert(typeBefore);
 
-        // return the colour instance for method chanining
+        // return the colour instance for method chaining
         return this
     }
 // ==========================================================================
