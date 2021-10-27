@@ -10,6 +10,13 @@ test("getContrast() on white returns black", () => {
     expect(white.getContrast()).toBe('rgba(0,0,0,1)');
 });
 
+test("getContrast(true) should return a numeric value indicating constrast", () => {
+    const white = new Colour('white');
+    const black = new Colour('black');
+    expect(white.getContrast(true)).toBe(-1);
+    expect(black.getContrast(true)).toBe(1);
+});
+
 test("getContrast() returns a contrast colour of the same type", () => {
     const blackHSL  = new Colour('hsl(0,0,0)');
     const whiteRGB  = new Colour('rgb(255,255,255)');

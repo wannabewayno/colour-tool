@@ -194,7 +194,7 @@ module.exports = class Colour {
         return this
     }
 // ==============================================================================
-    getContrast(){
+    getContrast(direction = false){
         const initialType = this.type;
         if(this.type !== 'rgb') this.convert('rgb');
 
@@ -207,21 +207,22 @@ module.exports = class Colour {
         if(initialType !== 'rgb') this.convert(initialType);
 
         // Check contrast
-        let black;
-        let white;
-        switch(this.type){
-            case'rgb' : black = 'rgba(0,0,0,1)';        white ='rgba(255,255,255,1)'; break;
-            case'hsl' : black = 'hsla(0,0%,0%,1)';      white ='hsla(0,0%,100%,1)';   break;
-            case'hex' : black = '#000000';              white ='#FFFFFF';             break;
-            case'cmyk': black = 'cmyk(0%,0%,0%,100%)';  white ='cmyk(0%,0%,0%,0%)';   break;
-            case'hwb' : black = 'hwb(0,0%,100%)';       white ='hwb(0,100%,0%)';      break;
-            case'hsv' : black = 'hsv(0,0%,0%)';         white ='hsv(0,0%,100%)';      break;
-            default: console.warn('unrecognised type!, cannot match appropriate colour')
+        let black = -1;
+        let white = 1;
+
+        if (!direction) {
+            switch(this.type){
+                case'rgb' : black = 'rgba(0,0,0,1)';        white ='rgba(255,255,255,1)'; break;
+                case'hsl' : black = 'hsla(0,0%,0%,1)';      white ='hsla(0,0%,100%,1)';   break;
+                case'hex' : black = '#000000';              white ='#FFFFFF';             break;
+                case'cmyk': black = 'cmyk(0%,0%,0%,100%)';  white ='cmyk(0%,0%,0%,0%)';   break;
+                case'hwb' : black = 'hwb(0,0%,100%)';       white ='hwb(0,100%,0%)';      break;
+                case'hsv' : black = 'hsv(0,0%,0%)';         white ='hsv(0,0%,100%)';      break;
+                default: console.warn('unrecognised type!, cannot match appropriate colour')
+            }
         }
        
-
         return (yiq >= 128) ? black : white;
-
     };
 // ==============================================================================
     /**
